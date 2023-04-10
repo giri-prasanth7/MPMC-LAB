@@ -1,0 +1,276 @@
+051 :
+Aim :
+To move data from one register to another in Keil μVision5. (data present as a. direct bit; b. from a different address location)
+Procedure:
+1) ‘KEILμVISION5’----> Project----> Location----> File name----> Controller ’ATMEL’---- >’AT89C51ED2’.
+2) Write Code and save it with .asm extension.
+3) Select Target1 ---> Source Group1 ---> Add files.
+4) Add the .asm file.
+5) Project ---> ‘Build Target’.
+6) Debug ---> ‘Start/stop Debug session’.
+7) Observe the oppcodes and step-by-step instructions in Disassembly section.
+8) Either use step (f11) or run (f5) and observe the output.
+Task 1:
+ORG 0000H
+MOV A,#25H
+MOV R0,#0EDH
+MOV A,R0
+END
+Task 2:
+ORG 0000H
+MOV 25H,#0ECH
+MOV A,25H
+MOV R0,25H
+END
+Aim:
+To solve the given mathematical equation(s) using arithmetic instructions in Keil μVision5.
+Task 1:
+ORG 0000H
+MOV A,#97H
+ADD A,#76H
+MOV 55H,A
+END
+Task 2:
+ORG 0000H
+MOV A,#76H
+SUBB A,#79H
+MOV 55H,A
+END
+Task 3:
+ORG 0000H
+MOV A,#0E7H
+ADD A,#8DH
+MOV R6,A
+MOV A,#3CH
+ADDC A,#3BH
+MOV R7,A
+END
+Task 4:
+ORG 0000H
+MOV A,#62H
+SUBB A,#76H
+MOV R6,A
+MOV A,#27H
+SUBB A,#12H
+MOV R7,A
+END
+Task 5:
+ORG 0000H
+MOV A,33H
+MOV B,34H
+MUL AB
+MOV 36H,A
+MOV 35H,B
+END
+Task 6:
+ORG 0000H
+MOV A,33H
+MOV B,34H
+DIV AB
+MOV 35H,B
+MOV 36H,A
+END
+Aim:
+To implement assembly programming with program control instruction of 8051 using Keil μVision5.
+Task 1:
+ORG 0000H
+MOV A, #00
+MOV R0, #20
+LOOP: ADD A, #05
+DJNZ R0, LOOP
+MOV R5, A
+END
+Task 2 :
+ORG 0000H
+MOV A, 55H
+CJNE A, #30H, OVER
+SJMP EXIT
+OVER: JNC NEXT
+MOV R1, A
+SJMP EXIT
+NEXT: MOV R2, A
+EXIT: NOP
+END
+Task 3:
+ORG 0000H
+MOV R0, #40H
+MOV DPTR, #3000H
+MOV R2, #05H
+LOOP: MOV A,@R0
+CPL A
+MOVX @DPTR,A
+INC R0
+INC DPTR
+DJNZ R2, LOOP
+END
+Aim:
+To implement assembly programming with input/output ports of 8051 using Keil μVision5.
+Task 1 :
+ORG 0000H
+MOV P0, #00H
+BACK: MOV A,#55H
+MOV P0, A
+ACALL DELAY
+MOV A,#0AAH
+MOV P0, A
+ACALL DELAY
+SJMP BACK
+DELAY: MOV R2, #200
+AGAIN: MOV R3, #250
+HERE: NOP
+NOP
+DJNZ R3, HERE
+DJNZ R2, AGAIN
+RET
+END
+Task 2:
+ORG 000H
+CLR P1.3
+BACK: SETB P1.3
+ACALL DELAY
+ACALL DELAY
+CLR P1.3
+ACALL DELAY
+SJMP BACK
+DELAY:MOV R3, #200
+HERE: DJNZ R3,HERE
+RET
+END
+Aim:
+To implement assembly programming with timer, counter and serial communication of 8051 using Keil μVision5.
+Task 1:
+ORG 0000H
+MOV TMOD, #01H
+BACK:MOV TL0, #01AH
+MOV TH0, #0FFH
+SETB TR0
+AGAIN: JNB TF0, AGAIN
+CLR TR0
+CPL P2.7
+CLR TF0
+SJMP BACK
+END
+Task 2 :
+ORG 0000H
+MOV TMOD, #10H
+REPEAT: MOV R0,#21
+CPL P1.7
+BACK: MOV TL1, #00H
+MOV TH1, #00H
+SETB TR1
+AGAIN: JNB TF1, AGAIN
+CLR TR1
+CLR TF1
+DJNZ R0, BACK
+SJMP REPEAT
+END
+Task 3:
+ORG 000H
+REPEAT: MOV TMOD, #60H
+MOV TH1, #0
+SETB P3.5
+AGAIN: SETB TR1
+BACK:MOV A, TL1
+MOV P1, A
+JNB TF1, BACK
+CLR TR1
+CLR TF1
+SJMP REPEAT
+END
+Task 4:
+ORG 0000H
+MOV TMOD,#20H
+MOV TH1,#0FDH
+MOV SCON,#50H
+SETB TR1 ;start timer 1
+AGAIN: MOV A,#'V'
+ACALL TRANS
+MOV A,#'I'
+ACALL TRANS
+MOV A,#'T'
+ACALL TRANS
+MOV A,#' '
+ACALL TRANS
+SJMP AGAIN
+TRANS: MOV SBUF,A
+HERE: JNB TI,HERE
+CLR TI
+RET
+END
+Task 5 :
+ORG 0000H
+MOV TMOD,#20H
+MOV TH1,#0FAH
+MOV SCON,#50H
+SETB TR1
+HERE: JNB RI,HERE
+MOV A,SBUF
+MOV P1,A
+CLR RI ;
+SJMP HERE
+END
+Aim:
+To implement assembly programming with interrupt of 8051 using Keil μVision5.
+Task 1:
+ORG 0000h
+LJMP main // ISR for Timer 0
+ORG 000Bh
+CPL P2.1
+RETI
+main: MOV TMOD,#02H
+MOV P0,#0FFH
+MOV TH0,#155
+MOV IE,#82H
+SETB TR0
+Back: MOV A,P0
+MOV P1,A
+SJMP Back
+END
+Task 2:
+ORG 0000H
+LJMP main //ISR for INT1
+ORG 0013H
+SETB P1.3
+MOV R3,#255
+Back: DJNZ R3, Back
+CLR P1.3
+RETI
+ORG 30H
+main: MOV IE,#10000100B
+Here: SETB P1.5
+ACALL DELAY
+CLR P1.5
+ACALL DELAY
+SJMP Here //Delay of 500ms
+DELAY: MOV R2,#04H ;LOAD R2 WITH 07 HEX
+HERE3: MOV R1,#0FFH ;LOAD R1 WITH 0FF HEX
+HERE2: MOV R0,#0FFH ;LOAD R2 WITH 0FF HEX
+HERE1: DJNZ R0,HERE1 ;DECREMENT R0
+DJNZ R1,HERE2 ;DECREMENT R1
+DJNZ R2,HERE3 ;DECREMENT R2
+RET ;RETURN
+END
+Aim:
+To implement assembly programming using input/output ports of 8051 for LED and LCD using Keil μVision5.
+Task 1:
+ORG 0000H
+MOV P1, #00H
+BACK : MOV A, #55H
+MOV P1,A
+SETB P1.3
+ACALL DELAY
+CLR P1.3
+MOV A, #0AAH
+MOV P1,A
+ACALL DELAY
+SJMP BACK
+DELAY : MOV R2, #10
+AGAIN1 : MOV R3, #255
+AGAIN : MOV R4, #255
+HERE : NOP
+NOP
+DJNZ R4, HERE
+DJNZ R3, AGAIN
+DJNZ R2, AGAIN1
+RET
+END
