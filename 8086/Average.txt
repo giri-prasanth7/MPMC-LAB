@@ -1,0 +1,37 @@
+Average
+MOV BX,3H
+MOV AX,2H
+ADD AX,2H
+ADD AX,2H
+DIV BX
+MOV [2000],AX
+HLT
+
+SUM OF ARRAY OF NUMBERS
+MOV CX, 05h 1000
+MOV AX,0000H
+MOV BX,0000H
+MOV SI,1000H
+Repeat:
+MOV BL,[SI] --1010
+ADD AX,BX -1012
+INC SI -1014 -1002
+DEC CX -1015
+JNZ Repeat -1016
+MOV DI, 1011H -1018
+MOV [DI], AX -101c
+HLT
+
+SUM OF CORRESPONDING ELEMENTS OF TWO ARRAYS
+MOV SI, 1000: set the value of SI to 1000
+MOV CL, [SI]: load data from offset SI to register CL
+MOV CH, 00: set value of register CH to 00
+INC SI: increase value of SI by 1.
+MOV DI, 2000: set the value of DI to 2000.
+MOV AL, [SI]: load value from offset SI to register AL
+ADD AL, [DI]: Add value of register AL by content at offset DI.
+MOV [SI], AL: store value of register AL at offset SI.
+INC SI: increase value of SI by 1.
+INC DI: increase value of DI by 1.
+LOOP (address): jump to address if CX not 0 and CX=CX-1.
+HLT: stop

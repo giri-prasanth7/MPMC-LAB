@@ -1,0 +1,14 @@
+BCD to Hex
+MOV SI,1000 is used to move offset 1000 to Starting Index(SI)
+MOV DI,2000 is used to move offset 2000 to Destination Index(DI)
+MOV BL,[SI] is used to move the contents of [SI] to BL
+AND BL,0F is used to mask the higher order nibble from BL
+MOV AL,[SI] is used to move the contents of [SI] to AL
+AND AL,F0 is used to mask the lower order nibble from BL
+MOV CL,04 is used to move 04 to CL
+ROR AL,CL is used to reverse the contents of AL
+MOV DL,0A is used to move 0A to DL
+MUL DL is used to multiply contents of AL with DL
+ADD AL,BL is used to add contents of AL and BL
+MOV [DI],AL is used to move the contents of AL to [DI]
+HLT stops executing the program and halts any further execution

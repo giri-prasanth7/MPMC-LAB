@@ -1,0 +1,9 @@
+BCD to ASCII
+MOV AL, [2000]: loads contents of memory location 2000 in AL
+MOV AH, AL: copy contents of AL in AH
+AND AL, 0F: do AND operation on AL with 0F
+MOV CL, 04 assign 04 to CL register
+SHR AH, CL: shift the content of AH register right by 4 bits i.e. value of CL register
+OR AX, 3030: do OR operation on AX with 3030
+MOV [3000], AX: stores the content of AX register pair in 3000 memory address
+HLT: stops executing the program

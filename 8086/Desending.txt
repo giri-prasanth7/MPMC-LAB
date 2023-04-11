@@ -1,0 +1,16 @@
+MOV CH,04H
+MOV CL,04H
+MOV SI,2000
+MOV AL,[SI]
+MOV BL,[SI+1]
+CMP AL,BL
+JNB 1070 ; Random value was given here and will be updated once again
+MOV DL,[SI+1]
+XCHG [SI],DL
+MOV [SI+1],DL
+INC SI
+DEC CL
+JNZ 100A
+DEC CH
+JNZ 1003
+HLT
